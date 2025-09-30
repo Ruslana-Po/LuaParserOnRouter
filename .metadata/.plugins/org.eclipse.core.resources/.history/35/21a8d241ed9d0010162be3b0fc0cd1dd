@@ -1,5 +1,0 @@
-LUA_parser/source/parse_exception.o: \
- ../LUA_parser/source/parse_exception.cpp \
- ../LUA_parser/source/../include/parse_exception.h
-
-../LUA_parser/source/../include/parse_exception.h:

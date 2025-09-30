@@ -1,6 +1,0 @@
-17:02:25 **** Incremental Build of configuration Default for project test ****
-make all 
-make: Цель «all» не требует выполнения команд.
-
-17:02:25 Build Finished. 0 errors, 0 warnings. (took 132ms)
-

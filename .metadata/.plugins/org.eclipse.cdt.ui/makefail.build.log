@@ -1,7 +1,0 @@
-14:51:05 **** Incremental Build of configuration Default for project makefail ****
-make all 
-make: *** Нет правила для сборки цели «all».  Останов.
-"make all" terminated with exit code 2. Build might be incomplete.
-
-14:51:05 Build Failed. 1 errors, 0 warnings. (took 72ms)
-

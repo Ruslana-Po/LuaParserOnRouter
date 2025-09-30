@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Move &apos;c_cpp_properties.json&apos; to &apos;test2&apos;" description="Move &apos;c_cpp_properties.json&apos; to &apos;test2&apos;" destination="/test2" element1="/test/c_cpp_properties.json" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1758560843443" updateReferences="true"/>&#x0A;<refactoring comment="Move &apos;makefile&apos; to &apos;test2&apos;" description="Move &apos;makefile&apos; to &apos;test2&apos;" destination="/test2" element1="/test/makefile" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1758560852358" updateReferences="true"/>
-</session>

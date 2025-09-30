@@ -1,6 +1,0 @@
-11:15:58 **** Incremental Build of configuration Debug for project test2 ****
-make all 
-make: Цель «all» не требует выполнения команд.
-
-11:15:58 Build Finished. 0 errors, 0 warnings. (took 82ms)
-
