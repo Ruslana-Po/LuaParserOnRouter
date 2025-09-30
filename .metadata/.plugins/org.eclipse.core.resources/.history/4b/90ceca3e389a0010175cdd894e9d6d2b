@@ -1,0 +1,49 @@
+CXX = /home/lana/openwrt-19.07/openwrt-19.07/staging_dir/toolchain-mipsel_24kc_gcc-7.5.0_musl/bin/mipsel-openwrt-linux-musl-g++
+CXXFLAGS = -std=c++17 -Wall \
+           -I../include \
+           -I/home/lana/Table/Lua_Var_Exec/include \
+           -I../../Lua_Var_Exec \
+           -I/home/lana/Table/googletest/googletest/include 
+
+LDFLAGS = -L/home/lana/Table/googletest/googletest/build/lib \
+          -L/home/lana/openwrt-19.07/openwrt-19.07/staging_dir/target-mipsel_24kc_musl/usr/lib \
+          -pthread
+
+LDLIBS = -lgtest -lgtest_main -llua -lpthread -lm -ldl
+
+# Исходные файлы реализации
+SRC_FILES = ../../Lua_Var_Exec/source/str.cpp \
+            ../../Lua_Var_Exec/source/parse_exception.cpp \
+            ../../Lua_Var_Exec/source/marks.cpp \
+            ../../Lua_Var_Exec/source/tree_node.cpp \
+            ../../Lua_Var_Exec/source/tree.cpp \
+            ../../Lua_Var_Exec/source/blocks.cpp \
+            ../../Lua_Var_Exec/LuaWrapper.cpp
+
+# Тестовые файлы
+TEST_FILES = strTest.cpp marksTest.cpp parser.cpp tree_test.cpp treeNode_test.cpp blocksTest.cpp test_main.cpp
+
+# Объектные файлы
+OBJ_FILES = $(SRC_FILES:.cpp=.o) $(TEST_FILES:.cpp=.o)
+
+test_program: $(OBJ_FILES)
+	$(CXX) $(LDFLAGS) -o $@ $(OBJ_FILES) $(LDLIBS)
+
+# Правило компиляции .cpp файлов в .o файлы
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+# Отдельное правило для файлов в других директориях
+../../Lua_Var_Exec/source/%.o: ../../Lua_Var_Exec/source/%.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+../../Lua_Var_Exec/%.o: ../../Lua_Var_Exec/%.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+run: test_program
+	./test_program
+
+clean:
+	rm -f test_program $(OBJ_FILES)
+
+.PHONY: run clean

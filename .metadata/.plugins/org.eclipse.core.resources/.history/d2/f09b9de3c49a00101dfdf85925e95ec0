@@ -1,0 +1,51 @@
+CXX = /home/lana/openwrt-19.07/openwrt-19.07/staging_dir/toolchain-mipsel_24kc_gcc-7.5.0_musl/bin/mipsel-openwrt-linux-musl-g++
+
+CXXFLAGS = -std=c++17 -Wall -g \
+           -I../include \
+           -I/home/lana/Table/Lua_Var_Exec/include \
+           -I../../Lua_Var_Exec \
+           -I/home/lana/Table/googletest/googletest/include
+
+LDFLAGS = -L/home/lana/Table/googletest/googletest/build/lib \
+          -L/home/lana/openwrt-19.07/openwrt-19.07/staging_dir/target-mipsel_24kc_musl/usr/lib
+
+LDLIBS = -llua -lgtest -lgtest_main -lpthread -lm -ldl
+
+# Явное перечисление объектных файлов
+OBJ_FILES = \
+    ../../Lua_Var_Exec/source/str.o \
+    ../../Lua_Var_Exec/source/parse_exception.o \
+    ../../Lua_Var_Exec/source/marks.o \
+    ../../Lua_Var_Exec/source/tree_node.o \
+    ../../Lua_Var_Exec/source/tree.o \
+    ../../Lua_Var_Exec/source/blocks.o \
+    ../../Lua_Var_Exec/LuaWrapper.o \
+    strTest.o \
+    parser.o \
+    marksTest.o \
+    treeNode_test.o \
+    tree_test.o \
+    blocksTest.o \
+    test_main.o
+
+TARGET = test2
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ_FILES)
+	$(CXX) $(LDFLAGS) -o $(TARGET) $(OBJ_FILES) $(LDLIBS)
+
+# Компиляция файлов из разных директорий
+../../Lua_Var_Exec/source/%.o: ../../Lua_Var_Exec/source/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+../../Lua_Var_Exec/%.o: ../../Lua_Var_Exec/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(TARGET) $(OBJ_FILES)
+
+.PHONY: all clean

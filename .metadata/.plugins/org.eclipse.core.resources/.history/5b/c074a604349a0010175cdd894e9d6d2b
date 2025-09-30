@@ -1,0 +1,18 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "MIPSEL Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/lana/Table/googletest/googletest/include",
+                "/home/lana/Table/googletest/googletest"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/mipsel-linux-gnu-g++",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-mips"
+        }
+    ]
+}

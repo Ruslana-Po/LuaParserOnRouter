@@ -1,0 +1,51 @@
+CXX = /home/lana/openwrt-19.07/openwrt-19.07/staging_dir/toolchain-mipsel_24kc_gcc-7.5.0_musl/bin/mipsel-openwrt-linux-musl-g++
+
+CXXFLAGS = -std=c++17 -Wall -g \
+           -I../include \
+           -I../../Lua_Var_Exec/include \
+           -I../../Lua_Var_Exec \
+           -I/home/lana/Table/googletest/googletest/include
+
+LDFLAGS = -L/home/lana/Table/googletest/googletest/build/lib \
+          -L/home/lana/openwrt-19.07/openwrt-19.07/staging_dir/target-mipsel_24kc_musl/usr/lib
+
+LDLIBS = -llua -lgtest -lgtest_main -lpthread -lm -ldl
+
+# Файлы реализации (правильные пути)
+SRC_FILES = \
+    ../../Lua_Var_Exec/source/str.cpp \
+    ../../Lua_Var_Exec/source/parse_exception.cpp \
+    ../../Lua_Var_Exec/source/marks.cpp \
+    ../../Lua_Var_Exec/source/tree_node.cpp \
+    ../../Lua_Var_Exec/source/tree.cpp \
+    ../../Lua_Var_Exec/source/blocks.cpp \
+    ../../Lua_Var_Exec/LuaWrapper.cpp
+
+# Тестовые файлы (текущая директория)
+TEST_FILES = \
+    strTest.cpp \
+    parser.cpp \
+    marksTest.cpp \
+    treeNode_test.cpp \
+    tree_test.cpp \
+    blocksTest.cpp \
+    test_main.cpp
+
+# Объектные файлы
+OBJ_FILES = $(SRC_FILES:.cpp=.o) $(TEST_FILES:.cpp=.o)
+
+TARGET = test2
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ_FILES)
+	$(CXX) $(LDFLAGS) -o $(TARGET) $(OBJ_FILES) $(LDLIBS)
+
+# Правило для компиляции файлов из разных директорий
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(TARGET) $(OBJ_FILES)
+
+.PHONY: all clean

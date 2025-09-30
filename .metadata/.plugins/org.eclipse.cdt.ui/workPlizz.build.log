@@ -1,0 +1,6 @@
+17:15:04 **** Incremental Build of configuration Debug for project workPlizz ****
+make all 
+make: Цель «all» не требует выполнения команд.
+
+17:15:04 Build Finished. 0 errors, 0 warnings. (took 73ms)
+

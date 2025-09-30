@@ -1,0 +1,4 @@
+LUA_parser/source/check_funck.o: ../LUA_parser/source/check_funck.cpp \
+ ../LUA_parser/source/../include/check_func.h
+
+../LUA_parser/source/../include/check_func.h:

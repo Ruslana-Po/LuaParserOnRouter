@@ -1,0 +1,33 @@
+# Кросс-компилятор
+CXX = mipsel-linux-gnu-g++
+CC = mipsel-linux-gnu-gcc
+
+# Флаги компиляции
+CXXFLAGS = -std=c++17 -Wall -g -I../include -I/home/lana/Table/Lua_Var_Exec/include -I../Lua_Var_Exec
+LDFLAGS = -lgtest -lgtest_main -pthread -llua5.1
+
+# Файлы
+SRC_FILES = ../Lua_Var_Exec/source/str.cpp \
+            ../Lua_Var_Exec/source/parse_exception.cpp \
+            ../Lua_Var_Exec/source/marks.cpp \
+            ../Lua_Var_Exec/source/tree_node.cpp \
+            ../Lua_Var_Exec/source/tree.cpp \
+            ../Lua_Var_Exec/source/blocks.cpp \
+            ../Lua_Var_Exec/LuaWrapper.cpp
+
+TEST_FILES = strTest.cpp marksTest.cpp parser.cpp tree_test.cpp treeNode_test.cpp blocksTest.cpp
+
+# Цели
+all: test_program
+
+test_program: $(TEST_FILES) $(SRC_FILES)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+
+run: test_program
+	# Для запуска на роутере
+	echo "Скомпилировано для mipsel. Запустите на роутере: ./test_program"
+
+clean:
+	rm -f test_program
+
+.PHONY: all run clean

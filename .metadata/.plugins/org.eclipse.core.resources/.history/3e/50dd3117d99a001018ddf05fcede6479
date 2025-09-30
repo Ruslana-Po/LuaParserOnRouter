@@ -1,0 +1,115 @@
+/*
+ * LuaWrapper.h
+ *
+ *  Created on: Dec 4, 2024
+ *      Author: george
+ */
+
+#ifndef INC_LUAWRAPPER_H_
+#define INC_LUAWRAPPER_H_
+
+extern "C"
+{
+#include "../../../../openwrt-19.07./openwrt-19.07/build_dir/target-mipsel_24kc_musl/lua-5.1.5/ipkg-install/usr/include/luaconf.h"
+#include "../../../../openwrt-19.07./openwrt-19.07/build_dir/target-mipsel_24kc_musl/lua-5.1.5/ipkg-install/usr/include/lua.h"
+#include "../../../../openwrt-19.07./openwrt-19.07/build_dir/target-mipsel_24kc_musl/lua-5.1.5/ipkg-install/usr/include/lauxlib.h"
+#include "../../../../openwrt-19.07./openwrt-19.07/build_dir/target-mipsel_24kc_musl/lua-5.1.5/ipkg-install/usr/include/lualib.h"
+}
+#include "Enums.h"
+
+#include <iostream>
+#include <mutex>
+#include <unordered_map>
+#include <unordered_set>
+#include <regex>
+#include <thread>
+
+namespace RimTir
+{
+class LuaWrapper
+{
+private:
+	lua_State *L_;
+	/**
+	 * @brief Функция для копирования всех функций из таблицы в глобальную таблицу
+	 */
+	void CopyTableToGlobal(lua_State *L, const char *tableName);
+
+	/**
+	 * @brief Сформировать выполняемый lua код
+	 *
+	 * @param var_name - имя переменной
+	 * @param var_lua_code - lua выражение переменной
+	 * @param[out] exec_code - сформированный lua код
+	 */
+	void FormExecLuaCode(const std::string &var_name,
+			const std::string &var_lua_code, std::string &exec_code);
+
+	/**
+	 * @brief Сформировать код для проверки результата выполнения условного выражения
+	 *
+	 * @param var_name - имя переменной
+	 * @param is_conditional - флаг
+	 * @param conditional_exec_code
+	 */
+	void FormConditionalExecLuaCode(const std::string &var_name,
+			const std::string &is_conditional,
+			std::string &conditional_exec_code);
+
+public:
+
+	/**
+	 * Структура для хранения информации о delay-блоке
+	 */
+	struct DelayBlock
+	{
+		unsigned int delay_time;         // Время задержки
+		std::string full_code; // Полный код delay-блока, включая конструкцию delay(n) ... delay_end()
+		std::string inner_code; // Код внутри delay-блока, без самой конструкции delay
+	};
+
+	/**
+	 * @brief Mutex для выполнения lua кода
+	 */
+	static std::mutex lua_mutex_;
+
+	/**
+	 * @brief Выполнить Lua код
+	 *
+	 * @note  Обязательно бликировать lua_mutex_ до вызова данного метода!!!
+	 *
+	 * @param var_name - имя переменной, чей код выполняется
+	 * @param lua_expression_code - код lua выражения
+	 */
+	void ExecLua(const std::string &var_name,
+			const std::string &lua_expression_code);
+
+	/**
+	 * @brief Инициализирует состояние Lua и устанавливает глобальные переменные из коллекции переменных.
+	 */
+	void InitializeLuaState();
+
+	/**
+	 * @brief Обновляет состояние Lua значением переменной
+	 *
+	 * @param data_type - тип данных переменной
+	 * @param value - значение переменной
+	 * @param var_name - имя переменной
+	 */
+	void SetVariableLuaValue(const RimTir::DataType &data_type,
+			const double &var_value, const std::string &var_name);
+
+	/**
+	 * @brief Вытащить значение переменной из lua-стека
+	 *
+	 * @param data_type - тип данных переменной
+	 * @param var_name - имя переменной
+	 * @param[out] value - значение переменной
+	 */
+	void GetVariableLuaValue(RimTir::DataType data_type,
+			const std::string &var_name, double &value);
+};
+
+}
+
+#endif /* INC_LUAWRAPPER_H_ */

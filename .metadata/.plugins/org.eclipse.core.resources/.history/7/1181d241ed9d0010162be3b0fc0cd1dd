@@ -1,0 +1,25 @@
+LUA_parser/source/parse.o: ../LUA_parser/source/parse.cpp \
+ ../LUA_parser/source/../include/parse.h \
+ ../LUA_parser/source/../include/check_func.h \
+ ../LUA_parser/source/../include/lua_parser.h \
+ ../LUA_parser/source/../include/parse_exception.h \
+ ../LUA_parser/source/../include/tree.h \
+ ../LUA_parser/source/../include/../include/tree_node.h \
+ ../LUA_parser/source/../include/tree_node.h \
+ ../LUA_parser/source/../include/str.h
+
+../LUA_parser/source/../include/parse.h:
+
+../LUA_parser/source/../include/check_func.h:
+
+../LUA_parser/source/../include/lua_parser.h:
+
+../LUA_parser/source/../include/parse_exception.h:
+
+../LUA_parser/source/../include/tree.h:
+
+../LUA_parser/source/../include/../include/tree_node.h:
+
+../LUA_parser/source/../include/tree_node.h:
+
+../LUA_parser/source/../include/str.h:

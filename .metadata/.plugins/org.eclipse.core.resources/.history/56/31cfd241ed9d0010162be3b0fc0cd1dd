@@ -1,0 +1,7 @@
+LUA_parser/source/tree.o: ../LUA_parser/source/tree.cpp \
+ ../LUA_parser/source/../include/tree.h \
+ ../LUA_parser/source/../include/../include/tree_node.h
+
+../LUA_parser/source/../include/tree.h:
+
+../LUA_parser/source/../include/../include/tree_node.h:

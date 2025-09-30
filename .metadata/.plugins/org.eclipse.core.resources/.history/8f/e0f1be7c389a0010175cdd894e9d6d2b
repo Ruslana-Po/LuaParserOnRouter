@@ -1,0 +1,45 @@
+CXX = /home/lana/openwrt-19.07/openwrt-19.07/staging_dir/toolchain-mipsel_24kc_gcc-7.5.0_musl/bin/mipsel-openwrt-linux-musl-g++
+
+# Флаги компиляции
+CXXFLAGS = -std=c++17 -Wall -g \
+           -I../include \
+           -I/home/lana/Table/Lua_Var_Exec/include \
+           -I../../Lua_Var_Exec \
+           -I/home/lana/Table/googletest/googletest/include
+
+# Флаги линковки
+LDFLAGS = -L/home/lana/Table/googletest/googletest/build/lib \
+          -L/home/lana/openwrt-19.07/openwrt-19.07/staging_dir/target-mipsel_24kc_musl/usr/lib
+
+# Библиотеки (ПОРЯДОК ВАЖЕН!)
+LDLIBS = -lgtest -lgtest_main -llua -lpthread -lm -ldl
+
+# Все исходные файлы
+SOURCES = \
+    ../../Lua_Var_Exec/source/str.cpp \
+    ../../Lua_Var_Exec/source/parse_exception.cpp \
+    ../../Lua_Var_Exec/source/marks.cpp \
+    ../../Lua_Var_Exec/source/tree_node.cpp \
+    ../../Lua_Var_Exec/source/tree.cpp \
+    ../../Lua_Var_Exec/source/blocks.cpp \
+    ../../Lua_Var_Exec/LuaWrapper.cpp \
+    strTest.cpp \
+    marksTest.cpp \
+    parser.cpp \
+    tree_test.cpp \
+    treeNode_test.cpp \
+    blocksTest.cpp \
+    test_main.cpp
+
+# Имя исполняемого файла
+TARGET = test2
+
+all: $(TARGET)
+
+$(TARGET): $(SOURCES)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SOURCES) $(LDFLAGS) $(LDLIBS)
+
+clean:
+	rm -f $(TARGET) *.o
+
+.PHONY: all clean
